@@ -9,9 +9,9 @@ Built with Streamlit, LangChain, ChromaDB, Hugging Face embeddings and Groq (Lla
 - **Upload PDFs** and index them into a persistent ChromaDB vector store. Files are hashed, so the same PDF is never indexed twice.
 - **Rewrites the question** using the chat history before searching, so follow-ups like "what about the second one?" still find the right text.
 - **Retrieves with MMR** (max marginal relevance) to get relevant chunks that aren't near-duplicates of each other.
-- **Answers only from the documents.** If the answer isn't there, it says "Out of scope" instead of guessing.
+- **Answers only from the documents.** If the answer isn't there, it says so instead of guessing.
 - **Shows sources** (file and page) and the retrieved chunks, so every answer can be checked.
-- **Persistent sessions** in SQLite: create, switch and delete chat sessions, and keep history across restarts.
+- **Private, persistent sessions** in SQLite. Each visitor gets their own workspace link, and retrieval only searches the documents in the current session.
 - **Tunable retrieval:** chunk size, overlap and top-k are adjustable from the sidebar.
 
 ## How it works
@@ -44,7 +44,7 @@ python -m venv venv
 venv\Scripts\activate          # Windows  (macOS/Linux: source venv/bin/activate)
 pip install -r requirements.txt
 copy .env.example .env         # then add your Groq API key
-streamlit run Assignment12_MustafaAmjad_RAG_CHATBOT.py
+streamlit run app.py
 ```
 
 You can also paste the Groq key into the sidebar instead of using `.env`. A sample PDF to try is in [`samples/`](samples/).
@@ -53,10 +53,14 @@ You can also paste the Groq key into the sidebar instead of using `.env`. A samp
 
 ```
 Rag-Chatbot/
-├── Assignment12_MustafaAmjad_RAG_CHATBOT.py   # Streamlit app
-├── samples/                                   # sample PDF for testing
+├── app.py                 # Streamlit UI
+├── rag/
+│   ├── pipeline.py        # PDF splitting, embeddings, retrieval, answering
+│   └── db.py              # SQLite sessions, messages and indexed files
+├── .streamlit/config.toml # theme
+├── samples/               # sample PDF for testing
 ├── requirements.txt
-├── packages.txt / runtime.txt                 # Streamlit Cloud config
+├── packages.txt / runtime.txt
 ├── .env.example
 └── LICENSE
 ```
