@@ -1,5 +1,7 @@
 # RAG Assistant Pro
 
+**Live demo:** [rag-assistant-mustafa.streamlit.app](https://rag-assistant-mustafa.streamlit.app)
+
 Chat with your PDFs. Upload documents, ask questions in plain English, and get answers grounded in those documents, with the file name and page number for every source.
 
 Built with Streamlit, LangChain, ChromaDB, Hugging Face embeddings and Groq (Llama 3.3 70B).
